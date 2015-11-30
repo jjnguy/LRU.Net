@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LRU.Net.Tests
@@ -31,6 +32,16 @@ namespace LRU.Net.Tests
             var one = cache.Get("one");
             cache.Add("for", "for");
             Assert.IsNull(cache.Get("two"));
+        }
+
+        [TestMethod]
+        public void StressTestMethod()
+        {
+            var numberOfEntires = 1000000;
+            var entries = Enumerable.Range(0, numberOfEntires).Select(i => i.ToString()).ToArray();
+            var cache = GetInitializedCache(numberOfEntires / 10, entries);
+            
+            Assert.IsFalse(cache.Contains("1"));
         }
     }
 }
