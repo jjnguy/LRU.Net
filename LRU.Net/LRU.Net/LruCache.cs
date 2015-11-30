@@ -29,12 +29,17 @@ namespace LRU.Net
 
         public TValue Get(TKey key)
         {
-            if (!_data.Contains(key)) return null;
+            if (!_data.Contains(key)) throw new Exception();
             var result = _data[key];
-            if (result == null) return null;
+            if (result == null) throw new Exception();
             _data.Remove(key);
             _data.Add(key, result);
             return (TValue)result;
+        }
+
+        public bool Contains(TKey key)
+        {
+            return _data.Contains(key);
         }
     }
 }
