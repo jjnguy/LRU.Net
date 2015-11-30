@@ -22,7 +22,7 @@ namespace LRU.Net
         {
             if (_data.Count >= _maxObjects)
             {
-                _data.RemoveAt(_data.Count - 1);
+                _data.RemoveAt(0);
             }
             _data.Add(key, value);
         }
@@ -31,6 +31,8 @@ namespace LRU.Net
         {
             if (!_data.Contains(key)) return null;
             var result = _data[key];
+            if (result == null) return null;
+            _data.Remove(key);
             _data.Add(key, result);
             return (TValue)result;
         }
