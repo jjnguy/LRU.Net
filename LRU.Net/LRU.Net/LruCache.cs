@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LRU.Net
 {
-    public class LruCache<TKey, TValue> where TValue : class
+    public class LruCache<TKey, TValue>
     {
         private readonly int _maxObjects;
         private OrderedDictionary _data;
