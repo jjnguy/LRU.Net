@@ -41,5 +41,11 @@ namespace LRU.Net
         {
             return _data.Contains(key);
         }
+
+        public TValue this[TKey key]
+        {
+            get { return Get(key); }
+            set { Add(key, value); }
+        }
     }
 }
