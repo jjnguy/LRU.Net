@@ -29,11 +29,15 @@ namespace LRU.Net
 
         public TValue Get(TKey key)
         {
-            if (!_data.Contains(key)) throw new Exception();
+            if (!_data.Contains(key))
+            {
+                throw new Exception($"Could not find item with key {key}");
+            }
             var result = _data[key];
-            if (result == null) throw new Exception();
+
             _data.Remove(key);
             _data.Add(key, result);
+
             return (TValue)result;
         }
 
