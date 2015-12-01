@@ -21,8 +21,7 @@ namespace LRU.Net.Tests
         public void TestMethod1()
         {
             var cache = GetInitializedCache(3, "one", "two", "tee", "for");
-
-            Assert.IsNull(cache.Get("one"));
+            ExceptionAssert.Throws(()=> cache.Get("one"));
         }
 
         [TestMethod]
@@ -31,17 +30,33 @@ namespace LRU.Net.Tests
             var cache = GetInitializedCache(3, "one", "two", "tee");
             var one = cache.Get("one");
             cache.Add("for", "for");
-            Assert.IsNull(cache.Get("two"));
+            ExceptionAssert.Throws(()=> cache.Get("two"));
         }
 
         [TestMethod]
         public void StressTestMethod()
         {
-            var numberOfEntires = 1000000;
+            var numberOfEntires = 100000;
             var entries = Enumerable.Range(0, numberOfEntires).Select(i => i.ToString()).ToArray();
             var cache = GetInitializedCache(numberOfEntires / 10, entries);
             
             Assert.IsFalse(cache.Contains("1"));
+        }
+    }
+
+    public static class ExceptionAssert
+    {
+        public static void Throws(Action code)
+        {
+            try
+            {
+                code();
+                Assert.Fail("Should have thrown an exception");
+            }
+            catch (Exception e)
+            {
+                // yay!
+            }
         }
     }
 }
